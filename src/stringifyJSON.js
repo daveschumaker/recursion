@@ -6,11 +6,6 @@
 var stringifyJSON = function(obj) {
   // your code goes here
 
-  // Checking what sort of data is provided from the test suite.
-  // TODO: Remove this
-  console.log('Type of: ' + typeof obj);
-  console.log('Value: ' + obj);
-
   // Hint from specRunner.html:
   //JSON does not allow you to stringify functions or undefined values. So let's skip.
   if (typeof obj === 'undefined' || typeof obj === 'function') {
