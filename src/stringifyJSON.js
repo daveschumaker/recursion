@@ -5,6 +5,7 @@
 
 
 // Test array
+// TODO: Remove this debugging stuff:
 var continents = [];
 continents[0] = "Europe";
 continents[1] = "Asia";
@@ -20,13 +21,23 @@ var stringifyJSON = function(obj) {
   // Set initial termination conditions.
   // If the object is undefined, then return undefined.
   if (typeof obj === 'undefined') {
-  	return "undefined";
+  	return 'undefined';
+  }
+
+  // Check if obj is a null value.
+  if (obj === null) {
+  	return 'null';
+  }
+
+  // Check if object is a number
+  if (typeof obj === 'number' || typeof obj === 'boolean') {
+  	return obj.toString();
   }
 
   // Check if object is array.
   if (Array.isArray(obj)) {
   	// We're going to add array elements to this string that we'll return later.
-  	var arrayString = "[";
+  	var arrayString = '[';
 
   	// Loop through the user provided array and add elements to the end of arrayString above.
   	// Also formatting the string so that it matches 
@@ -39,12 +50,13 @@ var stringifyJSON = function(obj) {
   	}
 
   	// Add closing brace to end of our string.
-  	arrayString = arrayString + "]";
+  	arrayString = arrayString + ']';
 
   	return arrayString;
-  } 
+  }
 
 };
 
-console.log("My function: " + stringifyJSON(continents));
-console.log("Real function: " + JSON.stringify(continents));
+// TODO: Remove this debugging stuff:
+console.log('My function: ' + stringifyJSON(9));
+console.log('Real function: ' + JSON.stringify(9));
