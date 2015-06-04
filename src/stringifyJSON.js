@@ -6,6 +6,27 @@
 var stringifyJSON = function(obj) {
   // your code goes here
 
+  // Working on the following problem:
+  // AssertionError: expected '["8"]' to equal '[8]'
+  // Not exact sure what's happening here, but we'll try it anyway.
+  // Creating a function to determine if value is a number or string.
+  // TODO: Refactor this to eliminate duplicate logic with checks for numbers and strings up above.
+  var isNumber = function(value) {
+  	if (typeof value === 'number' ) {
+  		return value;
+  	} else if (typeof value === 'string') {
+  		return '"' + value + '"';
+  	}
+
+  	// Working on the following problem:
+  	// AssertionError: expected '[8,",3,4"]' to equal '[8,[[],3,4]]'
+  	// If we have a nested array, let's do some RECURSION!
+  	// TODO: Dave, what are you even doing in this function right now.
+  	if (Array.isArray(value)) {
+  		return stringifyJSON(value);
+  	}
+  }  
+
   // Checking what sort of data is provided from the test suite.
   // TODO: Remove this
   console.log('Type of: ' + typeof obj);
@@ -36,27 +57,6 @@ var stringifyJSON = function(obj) {
   	// We're going to add array elements to this string that we'll return later.
   	var arrayString = '[';
 
-  	// Working on the following problem:
-  	// AssertionError: expected '["8"]' to equal '[8]'
-  	// Not exact sure what's happening here, but we'll try it anyway.
-  	// Creating a function to determine if value is a number or string.
-  	// TODO: Refactor this to eliminate duplicate logic with checks for numbers and strings up above.
-  	var isNumber = function(value) {
-  		if (typeof value === 'number' ) {
-  			return value;
-  		} else if (typeof value === 'string') {
-  			return '"' + value + '"';
-  		}
-
-  		// Working on the following problem:
-  		// AssertionError: expected '[8,",3,4"]' to equal '[8,[[],3,4]]'
-  		// If we have a nested array, let's do some RECURSION!
-  		// TODO: Dave, what are you even doing in this function right now.
-  		if (Array.isArray(value)) {
-  			return stringifyJSON(value);
-  		}
-  	}
-
   	// Loop through the user provided array and add elements to the end of arrayString above.
   	// Also formatting the string so that it matches 
   	for (var i = 0; i < obj.length; i++) {
@@ -82,7 +82,7 @@ var stringifyJSON = function(obj) {
   	for (var property in obj) {
   		// Check if object has own property and then do something with it.
   		if (obj.hasOwnProperty(property)) {
-  			objectString = objectString + property + ':' + obj[property];
+  			objectString = objectString + isNumber(property) + ':' + isNumber(obj[property]);
   		}
   	}
 
@@ -94,7 +94,7 @@ var stringifyJSON = function(obj) {
 
 };
 
-var myObj = {};
+var myObj = {"a":"apple"};
 
 // TODO: Remove this debugging stuff:
 console.log('My function: ' + stringifyJSON(myObj));
