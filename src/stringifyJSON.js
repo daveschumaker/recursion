@@ -6,27 +6,6 @@
 var stringifyJSON = function(obj) {
   // your code goes here
 
-  // Working on the following problem:
-  // AssertionError: expected '["8"]' to equal '[8]'
-  // Not exact sure what's happening here, but we'll try it anyway.
-  // Creating a function to determine if value is a number or string.
-  // TODO: Refactor this to eliminate duplicate logic with checks for numbers and strings up above.
-  var isNumber = function(value) {
-  	if (typeof value === 'number' ) {
-  		return value;
-  	} else if (typeof value === 'string') {
-  		return '"' + value + '"';
-  	}
-
-  	// Working on the following problem:
-  	// AssertionError: expected '[8,",3,4"]' to equal '[8,[[],3,4]]'
-  	// If we have a nested array, let's do some RECURSION!
-  	// TODO: Dave, what are you even doing in this function right now.
-  	if (Array.isArray(value)) {
-  		return stringifyJSON(value);
-  	}
-  }  
-
   // Checking what sort of data is provided from the test suite.
   // TODO: Remove this
   console.log('Type of: ' + typeof obj);
@@ -61,9 +40,9 @@ var stringifyJSON = function(obj) {
   	// Also formatting the string so that it matches 
   	for (var i = 0; i < obj.length; i++) {
   		if (i == 0) {
-  			arrayString = arrayString + isNumber(obj[i]);
+  			arrayString = arrayString + stringifyJSON(obj[i]);
   		} else {
-  			arrayString = arrayString + ',' + isNumber(obj[i]);
+  			arrayString = arrayString + ',' + stringifyJSON(obj[i]);
   		}
   	}
 
@@ -82,9 +61,14 @@ var stringifyJSON = function(obj) {
   	for (var property in obj) {
   		// Check if object has own property and then do something with it.
   		if (obj.hasOwnProperty(property)) {
-  			objectString = objectString + isNumber(property) + ':' + isNumber(obj[property]);
+  			objectString = objectString + stringifyJSON(property) + ':' + stringifyJSON(obj[property]) + ',';
   		}
   	}
+
+    // Remove last comma from our objectString
+    if (objectString.slice(-1) == ',') {
+      objectString = objectString.substring(0, objectString.length - 1);;
+    }
 
   	// Add closing bracket
   	objectString = objectString + '}';
@@ -94,7 +78,7 @@ var stringifyJSON = function(obj) {
 
 };
 
-var myObj = {"a":"apple"};
+var myObj = [{"a":"b"},{"c":"d"}];
 
 // TODO: Remove this debugging stuff:
 console.log('My function: ' + stringifyJSON(myObj));
