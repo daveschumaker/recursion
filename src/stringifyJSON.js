@@ -30,16 +30,31 @@ var stringifyJSON = function(obj) {
 
   // Check if object is array.
   if (Array.isArray(obj)) {
+  	console.log('Its and array!');
+
   	// We're going to add array elements to this string that we'll return later.
   	var arrayString = '[';
+
+  	// Working on the following problem:
+  	// AssertionError: expected '["8"]' to equal '[8]'
+  	// Not exact sure what's happening here, but we'll try it anyway.
+  	// Creating a function to determine if value is a number or string.
+  	// TODO: Refactor this to eliminate duplicate logic with checks for numbers and strings up above.
+  	var isNumber = function(value) {
+  		if (typeof value === 'number' ) {
+  			return value;
+  		} else {
+  			return '"' + obj[i] + '"';
+  		}
+  	}
 
   	// Loop through the user provided array and add elements to the end of arrayString above.
   	// Also formatting the string so that it matches 
   	for (var i = 0; i < obj.length; i++) {
   		if (i == 0) {
-  			arrayString = arrayString + '"' + obj[i] + '"';
+  			arrayString = arrayString + isNumber(obj[i]);
   		} else {
-  			arrayString = arrayString + ',"' + obj[i] + '"';
+  			arrayString = arrayString + ',' + isNumber(obj[i]);
   		}
   	}
 
@@ -49,8 +64,12 @@ var stringifyJSON = function(obj) {
   	return arrayString;
   }
 
+
+
 };
 
+var myObj = ["8"];
+
 // TODO: Remove this debugging stuff:
-//console.log('My function: ' + stringifyJSON(9));
-//console.log('Real function: ' + JSON.stringify(9));
+console.log('My function: ' + stringifyJSON(myObj));
+console.log('Real function: ' + JSON.stringify(myObj));
