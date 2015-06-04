@@ -3,20 +3,10 @@
 
 // but you don't so you're going to write it from scratch:
 
-
-// Test array
-// TODO: Remove this debugging stuff:
-var continents = [];
-continents[0] = "Europe";
-continents[1] = "Asia";
-continents[2] = "Australia";
-continents[3] = "Antarctica";
-continents[4] = "North America";
-continents[5] = "South America";
-continents[6] = "Africa";
-
 var stringifyJSON = function(obj) {
   // your code goes here
+  console.log('Type of: ' + typeof obj);
+  console.log('Value: ' + obj);
 
   // Set initial termination conditions.
   // If the object is undefined, then return undefined.
@@ -29,9 +19,13 @@ var stringifyJSON = function(obj) {
   	return 'null';
   }
 
-  // Check if object is a number
+  // Check if object is a number or a true / false value
   if (typeof obj === 'number' || typeof obj === 'boolean') {
   	return obj.toString();
+  }
+
+  if (typeof obj === 'string') {
+  	return '"' + obj + '"';
   }
 
   // Check if object is array.
@@ -58,5 +52,5 @@ var stringifyJSON = function(obj) {
 };
 
 // TODO: Remove this debugging stuff:
-console.log('My function: ' + stringifyJSON(9));
-console.log('Real function: ' + JSON.stringify(9));
+//console.log('My function: ' + stringifyJSON(9));
+//console.log('Real function: ' + JSON.stringify(9));
