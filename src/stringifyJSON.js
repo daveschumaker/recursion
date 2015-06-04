@@ -5,6 +5,9 @@
 
 var stringifyJSON = function(obj) {
   // your code goes here
+
+  // Checking what sort of data is provided from the test suite.
+  // TODO: Remove this
   console.log('Type of: ' + typeof obj);
   console.log('Value: ' + obj);
 
@@ -70,7 +73,18 @@ var stringifyJSON = function(obj) {
   	return arrayString;
   }
 
+  // If we get to this point, we're going to assume the argument provided
+  // is an object like "{}".
+  if (typeof obj === 'object') {
+  	// We're going to add key/values to this string that we'll return later.
+  	var objectString = '{';
 
+  	for (var property in object) {
+  		objectString = objectString + property;
+  	}
+
+  	return objectString = objectString + obj + '}';
+  }
 
 };
 
