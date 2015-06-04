@@ -11,10 +11,10 @@ var stringifyJSON = function(obj) {
   console.log('Type of: ' + typeof obj);
   console.log('Value: ' + obj);
 
-  // Set initial termination conditions.
-  // If the object is undefined, then return undefined.
-  if (typeof obj === 'undefined') {
-  	return 'undefined';
+  // Hint from specRunner.html:
+  //JSON does not allow you to stringify functions or undefined values. So let's skip.
+  if (typeof obj === 'undefined' || typeof obj === 'function') {
+    return;
   }
 
   // Check if obj is a null value.
@@ -61,8 +61,12 @@ var stringifyJSON = function(obj) {
   	for (var property in obj) {
   		// Check if object has own property and then do something with it.
   		if (obj.hasOwnProperty(property)) {
-  			objectString = objectString + stringifyJSON(property) + ':' + stringifyJSON(obj[property]) + ',';
-  		}
+        // Not entirely sure if this is kosher, but trying to account for undefined values and functions.
+        // If an undefined value is returned, then skip, otherwise keep looking at the object properties.
+        if (typeof stringifyJSON(obj[property]) != 'undefined') {
+  			 objectString = objectString + stringifyJSON(property) + ':' + stringifyJSON(obj[property]) + ',';
+  		  }
+      }
   	}
 
     // Remove last comma from our objectString
@@ -77,9 +81,3 @@ var stringifyJSON = function(obj) {
   }
 
 };
-
-var myObj = [{"a":"b"},{"c":"d"}];
-
-// TODO: Remove this debugging stuff:
-console.log('My function: ' + stringifyJSON(myObj));
-console.log('Real function: ' + JSON.stringify(myObj));
