@@ -30,8 +30,6 @@ var stringifyJSON = function(obj) {
 
   // Check if object is array.
   if (Array.isArray(obj)) {
-  	console.log('Its and array!');
-
   	// We're going to add array elements to this string that we'll return later.
   	var arrayString = '[';
 
@@ -43,8 +41,16 @@ var stringifyJSON = function(obj) {
   	var isNumber = function(value) {
   		if (typeof value === 'number' ) {
   			return value;
-  		} else {
-  			return '"' + obj[i] + '"';
+  		} else if (typeof value === 'string') {
+  			return '"' + value + '"';
+  		}
+
+  		// Working on the following problem:
+  		// AssertionError: expected '[8,",3,4"]' to equal '[8,[[],3,4]]'
+  		// If we have a nested array, let's do some RECURSION!
+  		// TODO: Dave, what are you even doing in this function right now.
+  		if (Array.isArray(value)) {
+  			return stringifyJSON(value);
   		}
   	}
 
@@ -68,7 +74,7 @@ var stringifyJSON = function(obj) {
 
 };
 
-var myObj = ["8"];
+var myObj = {};
 
 // TODO: Remove this debugging stuff:
 console.log('My function: ' + stringifyJSON(myObj));
