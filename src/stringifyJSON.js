@@ -79,11 +79,17 @@ var stringifyJSON = function(obj) {
   	// We're going to add key/values to this string that we'll return later.
   	var objectString = '{';
 
-  	for (var property in object) {
-  		objectString = objectString + property;
+  	for (var property in obj) {
+  		// Check if object has own property and then do something with it.
+  		if (obj.hasOwnProperty(property)) {
+  			objectString = objectString + property + ':' + obj[property];
+  		}
   	}
 
-  	return objectString = objectString + obj + '}';
+  	// Add closing bracket
+  	objectString = objectString + '}';
+
+  	return objectString;
   }
 
 };
